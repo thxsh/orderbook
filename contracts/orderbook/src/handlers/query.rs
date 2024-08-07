@@ -1,12 +1,12 @@
 use crate::{
-    contract::{
-        Orderbook, OrderbookResult
-    },
-    msg::{ConfigResponse, CountResponse, OrderbookQueryMsg},
-    state::{CONFIG, COUNT},
+    contract::{Orderbook, OrderbookResult},
+    msg::{BidsResponse, ConfigResponse, OrderbookQueryMsg},
+    state::{BIDS, CONFIG},
 };
 
-use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdResult};
+use abstract_app::objects::AssetEntry;
+use cosmwasm_std::{to_json_binary, Binary, Deps, Env, Order, StdResult};
+use cw_storage_plus::Bound;
 
 pub fn query_handler(
     deps: Deps,
@@ -16,7 +16,7 @@ pub fn query_handler(
 ) -> OrderbookResult<Binary> {
     match msg {
         OrderbookQueryMsg::Config {} => to_json_binary(&query_config(deps)?),
-        OrderbookQueryMsg::Count {} => to_json_binary(&query_count(deps)?),
+        OrderbookQueryMsg::Bids {} => to_json_binary(&query_bids(deps)?),
     }
     .map_err(Into::into)
 }
@@ -26,7 +26,11 @@ fn query_config(deps: Deps) -> StdResult<ConfigResponse> {
     Ok(ConfigResponse {})
 }
 
-fn query_count(deps: Deps) -> StdResult<CountResponse> {
-    let count = COUNT.load(deps.storage)?;
-    Ok(CountResponse { count })
+fn query_bids(deps: Deps) -> StdResult<BidsResponse> {
+    let bids = BIDS
+        .range(deps.storage, None, None, Order::Ascending)
+        .map(|item| item.map(|(k, d)| (AssetEntry::from(k), d)))
+        .collect::<StdResult<Vec<_>>>()?;
+
+    Ok(BidsResponse { bids })
 }

@@ -25,4 +25,13 @@ pub enum OrderbookError {
 
     #[error("{0}")]
     DappError(#[from] AppError),
+
+    #[error("Invalid side {0}")]
+    InvalidSide(String),
+
+    #[error("Quantity must be greater than zero")]
+    ZeroQuantity,
+
+    #[error("Price must be greater than zero")]
+    ZeroPrice,
 }

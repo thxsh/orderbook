@@ -1,9 +1,7 @@
 use crate::{
-    contract::{
-        Orderbook, OrderbookResult
-    },
+    contract::{Orderbook, OrderbookResult},
     msg::OrderbookInstantiateMsg,
-    state::{Config, CONFIG, COUNT},
+    state::{Config, CONFIG},
 };
 
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
@@ -16,8 +14,9 @@ pub fn instantiate_handler(
     msg: OrderbookInstantiateMsg,
 ) -> OrderbookResult {
     let config: Config = Config {};
-
     CONFIG.save(deps.storage, &config)?;
-    COUNT.save(deps.storage, &msg.count)?;
+
+    // COUNT.save(deps.storage, &msg.count)?;
+
     Ok(Response::new())
 }

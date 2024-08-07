@@ -1,9 +1,7 @@
 use crate::{
     error::OrderbookError,
     handlers,
-    msg::{
-        OrderbookExecuteMsg, OrderbookInstantiateMsg, OrderbookMigrateMsg, OrderbookQueryMsg
-    },
+    msg::{OrderbookExecuteMsg, OrderbookInstantiateMsg, OrderbookMigrateMsg, OrderbookQueryMsg},
     replies::{self, INSTANTIATE_REPLY_ID},
     APP_VERSION, ORDERBOOK_ID,
 };
@@ -15,8 +13,13 @@ use cosmwasm_std::Response;
 pub type OrderbookResult<T = Response> = Result<T, OrderbookError>;
 
 /// The type of the app that is used to build your app and access the Abstract SDK features.
-pub type Orderbook =
-    AppContract<OrderbookError, OrderbookInstantiateMsg, OrderbookExecuteMsg, OrderbookQueryMsg, OrderbookMigrateMsg>;
+pub type Orderbook = AppContract<
+    OrderbookError,
+    OrderbookInstantiateMsg,
+    OrderbookExecuteMsg,
+    OrderbookQueryMsg,
+    OrderbookMigrateMsg,
+>;
 
 const APP: Orderbook = Orderbook::new(ORDERBOOK_ID, APP_VERSION, None)
     .with_instantiate(handlers::instantiate_handler)
