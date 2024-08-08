@@ -19,6 +19,7 @@ pub type Orderbook = AppContract<
     OrderbookExecuteMsg,
     OrderbookQueryMsg,
     OrderbookMigrateMsg,
+    cw20::Cw20ReceiveMsg,
 >;
 
 const APP: Orderbook = Orderbook::new(ORDERBOOK_ID, APP_VERSION, None)
@@ -26,6 +27,7 @@ const APP: Orderbook = Orderbook::new(ORDERBOOK_ID, APP_VERSION, None)
     .with_execute(handlers::execute_handler)
     .with_query(handlers::query_handler)
     .with_migrate(handlers::migrate_handler)
+    .with_receive(handlers::receive_handler)
     .with_dependencies(&[])
     .with_replies(&[(INSTANTIATE_REPLY_ID, replies::instantiate_reply)]);
 

@@ -1,8 +1,8 @@
 use crate::{contract::Orderbook, state::BidAsk};
 
-use abstract_app::objects::AssetEntry;
+use abstract_app::objects::{ans_host::AnsHost, AssetEntry};
 use cosmwasm_schema::QueryResponses;
-use cosmwasm_std::{Decimal, Uint128};
+use cosmwasm_std::{Addr, Decimal, Uint128};
 
 // This is used for type safety and re-exporting the contract endpoint structs.
 abstract_app::app_msg_types!(Orderbook, OrderbookExecuteMsg, OrderbookQueryMsg);
@@ -44,6 +44,8 @@ pub enum OrderbookQueryMsg {
     Config {},
     #[returns(BidsResponse)]
     Bids {},
+    #[returns(AsksResponse)]
+    Asks {},
 }
 
 #[cosmwasm_schema::cw_serde]
@@ -52,4 +54,9 @@ pub struct ConfigResponse {}
 #[cosmwasm_schema::cw_serde]
 pub struct BidsResponse {
     pub bids: Vec<(AssetEntry, Vec<BidAsk>)>,
+}
+
+#[cosmwasm_schema::cw_serde]
+pub struct AsksResponse {
+    pub asks: Vec<(AssetEntry, Vec<BidAsk>)>,
 }

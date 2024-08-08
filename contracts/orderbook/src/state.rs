@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use abstract_app::objects::{AccountId, AssetEntry};
+use abstract_app::objects::{ans_host::AnsHost, AccountId, AssetEntry};
 use cosmwasm_std::{Addr, Decimal, Uint128};
 use cw_storage_plus::{Endian, IntKey, Item, Key, KeyDeserialize, Map, PrimaryKey};
 

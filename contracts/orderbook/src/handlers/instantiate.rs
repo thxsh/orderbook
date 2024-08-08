@@ -4,6 +4,7 @@ use crate::{
     state::{Config, CONFIG},
 };
 
+use abstract_app::objects::ans_host::AnsHost;
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Response};
 
 pub fn instantiate_handler(
@@ -15,8 +16,6 @@ pub fn instantiate_handler(
 ) -> OrderbookResult {
     let config: Config = Config {};
     CONFIG.save(deps.storage, &config)?;
-
-    // COUNT.save(deps.storage, &msg.count)?;
 
     Ok(Response::new())
 }

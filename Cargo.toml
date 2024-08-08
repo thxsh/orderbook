@@ -28,6 +28,11 @@ abstract-interface = { version = "0.23.0" }
 abstract-client = { version = "0.23.0" }
 lazy_static = "1.4.0"
 cw-orch = { version = "0.24.1" }
+cw20 = { package = "abstract-cw20", version = "3.0.0" }
+cw20-base = { package = "abstract-cw20-base", features = [
+  "library",
+], version = "3.0.0" }
+cw-plus-interface = { package = "abstract-cw-plus-interface", version = "3.0.0" }
 const_format = "0.2.32"
 speculoos = "0.11.0"
 semver = "1.0"

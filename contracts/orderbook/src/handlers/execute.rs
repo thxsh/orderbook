@@ -5,8 +5,13 @@ use crate::{
     OrderbookError,
 };
 
-use abstract_app::{objects::AssetEntry, traits::AbstractResponse};
-use cosmwasm_std::{Addr, Decimal, DepsMut, Env, MessageInfo, Uint128};
+use abstract_app::{
+    objects::AssetEntry,
+    sdk::{AccountVerification, AccountingInterface, Resolve, TransferInterface},
+    traits::{AbstractNameService, AbstractResponse},
+};
+use cosmwasm_std::{to_json_binary, Addr, Decimal, DepsMut, Env, MessageInfo, Uint128, WasmMsg};
+use cw20::Cw20ExecuteMsg;
 use cw_storage_plus::Map;
 
 pub fn execute_handler(
@@ -86,15 +91,42 @@ pub fn limit_order(
     // for buy orders, place the order in the bids
     // for sell orders, place the order in the asks
     if &side == "buy" {
-        // find by price key and push to vector of orders
-        let priced_bids = BIDS.may_load(deps.storage, asset.clone().into())?;
-        println!("priced_bids: {:?}", priced_bids);
-
         let bid = BidAsk {
-            account,
+            account: account.clone(),
             price,
             quantity,
         };
+
+        // let balance = bank.balance(&asset)?;
+        // println!("balance: {:?}", balance);
+        let bank = module.bank(deps.as_ref());
+        let vault = module.accountant(deps.as_ref());
+        let list = vault.assets_list()?;
+        println!("list: {:?}", list);
+
+        
+        // let balnc = bank.balance(&asset)?;
+        // println!("balnc: {:?}", balnc);
+
+        let ans = module.name_service(deps.as_ref());
+        let asset_info = ans.query(&asset);
+        println!("asset_info: {:?}", asset_info);
+        // let asset_info =
+        // reserve the cw asset from the sender
+        // Check if the sender has enough balance and send tokens to the contract
+        // let transfer_cw20 = WasmMsg::Execute {
+        //     contract_addr: account.clone().to_string(),
+        //     msg: to_json_binary(&Cw20ExecuteMsg::TransferFrom {
+        //         owner: account.clone().to_string(),
+        //         recipient: env.contract.address.to_string(),
+        //         amount: Uint128::one(),
+        //     })?,
+        //     funds: vec![],
+        // };
+
+        // find by price key and push to vector of orders
+        let priced_bids = BIDS.may_load(deps.storage, asset.clone().into())?;
+        println!("priced_bids: {:?}", priced_bids);
 
         if priced_bids.is_none() {
             BIDS.save(deps.storage, asset.clone().into(), &vec![bid])?;
@@ -133,7 +165,17 @@ pub fn market_order(
     quantity: Uint128,
     side: String,
 ) -> OrderbookResult {
-    // COUNT.update(deps.storage, |count| OrderbookResult::Ok(count + 1))?;
+    // validate quantity
+    if quantity.is_zero() {
+        return Err(OrderbookError::ZeroQuantity);
+    }
+
+    // validate side
+    if &side != "buy" && &side != "sell" {
+        return Err(OrderbookError::InvalidSide(side));
+    }
+
+    // for buy orders, sort asks by price and quantity
 
     Ok(module.response("increment"))
 }
