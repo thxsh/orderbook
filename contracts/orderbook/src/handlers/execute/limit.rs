@@ -18,10 +18,10 @@ fn verify_deposit(info: MessageInfo, denom: &str) -> OrderbookResult<Uint128> {
             return Err(OrderbookError::ZeroQuantity);
         }
 
-        return Ok(funds.amount);
+        Ok(funds.amount)
     } else {
         // TODO >> return the funds back to the sender
-        return Err(OrderbookError::IncorrectAsset);
+        Err(OrderbookError::IncorrectAsset)
     }
 }
 
