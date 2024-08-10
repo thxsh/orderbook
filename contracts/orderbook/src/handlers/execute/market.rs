@@ -6,6 +6,7 @@ use crate::{
 use abstract_app::traits::AbstractResponse;
 use cosmwasm_std::{DepsMut, Env, MessageInfo, Uint128};
 
+#[allow(clippy::too_many_arguments)]
 pub fn market_order(
     _deps: DepsMut,
     _env: Env,

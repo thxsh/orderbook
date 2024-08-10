@@ -14,9 +14,7 @@ use orderbook::{
 };
 
 use abstract_app::objects::namespace::Namespace;
-use abstract_client::{
-    builder::cw20_builder::Cw20QueryMsgFns, AbstractClient, Application, Environment,
-};
+use abstract_client::{AbstractClient, Application, Environment};
 use cosmwasm_std::{coins, Decimal, Uint128};
 use cw_controllers::AdminError;
 // Use prelude to get all the necessary imports

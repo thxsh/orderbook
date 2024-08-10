@@ -12,7 +12,7 @@ use abstract_app::{
 use cosmwasm_std::{Decimal, DepsMut, Env, MessageInfo, Uint128};
 
 fn verify_deposit(info: MessageInfo, denom: &str, qty: Uint128) -> OrderbookResult<()> {
-    if let Some(funds) = info.funds.iter().find(|coin| &coin.denom == denom) {
+    if let Some(funds) = info.funds.iter().find(|coin| coin.denom == denom) {
         println!("funds: {:?}", funds);
         if funds.amount != qty {
             // TODO >> return the funds back to the sender
@@ -26,6 +26,7 @@ fn verify_deposit(info: MessageInfo, denom: &str, qty: Uint128) -> OrderbookResu
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn limit_order(
     deps: DepsMut,
     _env: Env,
