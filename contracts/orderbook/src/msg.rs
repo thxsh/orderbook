@@ -1,7 +1,7 @@
 use crate::{contract::Orderbook, state::BidAsk};
 
 use cosmwasm_schema::QueryResponses;
-use cosmwasm_std::{Decimal, Uint128};
+use cosmwasm_std::{Decimal};
 
 // This is used for type safety and re-exporting the contract endpoint structs.
 abstract_app::app_msg_types!(Orderbook, OrderbookExecuteMsg, OrderbookQueryMsg);
