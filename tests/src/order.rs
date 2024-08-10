@@ -56,18 +56,22 @@ fn place_limit_order() -> anyhow::Result<()> {
     assert_eq!(err, OrderbookError::ZeroPrice);
 
     // make sure 0 quantity doesn't work
-    // let err: OrderbookError = app
-    //     .limit_order(
-    //         osmo_asset.clone(),
-    //         Decimal::one(),
-    //         atom_asset.clone(),
-    //         "buy",
-    //         &coins(0, "atom"),
-    //     )
-    //     .unwrap_err()
-    //     .downcast()
-    //     .unwrap();
-    // assert_eq!(err, OrderbookError::ZeroQuantity);
+    let err: cw_orch::anyhow::Error = app
+        .limit_order(
+            osmo_asset.clone(),
+            Decimal::one(),
+            atom_asset.clone(),
+            "buy",
+            &coins(0, "atom"),
+        )
+        .unwrap_err()
+        .downcast::<OrderbookError>()
+        .unwrap_err();
+    // println!("err: {:#?}", );
+    assert_eq!(
+        err.source().unwrap().to_string(),
+        "Cannot transfer empty coins amount".to_string()
+    );
 
     // make sure invalid side doesn't work
     let err: OrderbookError = app
