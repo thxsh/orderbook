@@ -11,19 +11,18 @@ use abstract_app::{
 };
 use cosmwasm_std::{Decimal, DepsMut, Env, MessageInfo, Uint128};
 
-fn verify_deposit(info: MessageInfo, denom: &str, qty: Uint128) -> OrderbookResult<()> {
+fn verify_deposit(info: MessageInfo, denom: &str) -> OrderbookResult<Uint128> {
     if let Some(funds) = info.funds.iter().find(|coin| coin.denom == denom) {
         println!("funds: {:?}", funds);
-        if funds.amount != qty {
-            // TODO >> return the funds back to the sender
-            return Err(OrderbookError::InvalidQuantity);
+        if funds.amount.is_zero() {
+            return Err(OrderbookError::ZeroQuantity);
         }
+
+        return Ok(funds.amount);
     } else {
         // TODO >> return the funds back to the sender
         return Err(OrderbookError::IncorrectAsset);
     }
-
-    Ok(())
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -35,14 +34,13 @@ pub fn limit_order(
     base: String,
     quote: String,
     price: Decimal,
-    quantity: Uint128,
     side: String,
 ) -> OrderbookResult {
     let sender = info.sender.clone();
 
     // println!(
-    //     "limit_order: sender: {:?}, base: {:?}, quote: {:?}, price: {:?}, quantity: {:?}, side: {:?}",
-    //     sender, base, quote, price, quantity, side
+    //     "limit_order: sender: {:?}, base: {:?}, quote: {:?}, price: {:?}, side: {:?}",
+    //     sender, base, quote, price, side
     // );
 
     // validate side
@@ -53,11 +51,6 @@ pub fn limit_order(
     // validate price
     if price.is_zero() {
         return Err(OrderbookError::ZeroPrice);
-    }
-
-    // validate quantity
-    if quantity.is_zero() {
-        return Err(OrderbookError::ZeroQuantity);
     }
 
     let bank = api.bank(deps.as_ref());
@@ -73,8 +66,8 @@ pub fn limit_order(
     // for buy orders, place the order in the bids using quote_asset
     // for sell orders, place the order in the asks using base_asset
     let deposit = if &side == "buy" {
-        // make sure quantity matched the quote_asset funds deposited
-        verify_deposit(info.clone(), quote.as_str(), quantity)?;
+        // make sure quote_asset funds deposited
+        let quantity = verify_deposit(info.clone(), quote.as_str())?;
 
         let deposit = bank.deposit(info.funds)?;
 
@@ -98,8 +91,8 @@ pub fn limit_order(
 
         deposit
     } else {
-        // make sure quantity matched the base_asset funds deposited
-        verify_deposit(info.clone(), base.as_str(), quantity)?;
+        // make sure base_asset funds deposited
+        let quantity = verify_deposit(info.clone(), base.as_str())?;
 
         let deposit = bank.deposit(info.funds)?;
 

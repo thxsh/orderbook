@@ -38,9 +38,6 @@ pub enum OrderbookError {
     #[error("Price must be greater than zero")]
     ZeroPrice,
 
-    #[error("Quantity does not match the funds deposited")]
-    InvalidQuantity,
-
     #[error("Asset deposited does not match the market side")]
     IncorrectAsset,
 }

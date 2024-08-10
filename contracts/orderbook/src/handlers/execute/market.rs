@@ -14,14 +14,8 @@ pub fn market_order(
     _info: MessageInfo,
     _base: String,
     _quote: String,
-    quantity: Uint128,
     side: String,
 ) -> OrderbookResult {
-    // validate quantity
-    if quantity.is_zero() {
-        return Err(OrderbookError::ZeroQuantity);
-    }
-
     // validate side
     if &side != "buy" && &side != "sell" {
         return Err(OrderbookError::InvalidSide(side));

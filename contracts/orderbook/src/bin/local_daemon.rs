@@ -51,8 +51,7 @@ fn main() -> anyhow::Result<()> {
 
     let account = abstract_client.account_builder().build()?;
     // Installs the app on the Account
-    let app =
-        account.install_app::<OrderbookInterface<_>>(&OrderbookInstantiateMsg { count: 0 }, &[])?;
+    let app = account.install_app::<OrderbookInterface<_>>(&OrderbookInstantiateMsg {}, &[])?;
 
     // Import app's endpoint function traits for easy interactions.
     use orderbook::msg::{OrderbookExecuteMsgFns, OrderbookQueryMsgFns};

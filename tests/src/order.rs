@@ -46,7 +46,6 @@ fn place_limit_order() -> anyhow::Result<()> {
         .limit_order(
             osmo_asset.clone(),
             Decimal::zero(),
-            Uint128::one(),
             atom_asset.clone(),
             "buy",
             &atom_coins,
@@ -61,7 +60,6 @@ fn place_limit_order() -> anyhow::Result<()> {
         .limit_order(
             osmo_asset.clone(),
             Decimal::one(),
-            Uint128::zero(),
             atom_asset.clone(),
             "buy",
             &atom_coins,
@@ -76,7 +74,6 @@ fn place_limit_order() -> anyhow::Result<()> {
         .limit_order(
             osmo_asset.clone(),
             Decimal::one(),
-            Uint128::one(),
             atom_asset.clone(),
             "invalid",
             &atom_coins,
@@ -91,7 +88,6 @@ fn place_limit_order() -> anyhow::Result<()> {
         .limit_order(
             osmo_asset.clone(),
             Decimal::one(),
-            Uint128::one(),
             atom_asset.clone(),
             "buy",
             &coins(2, "atom"),
@@ -106,7 +102,6 @@ fn place_limit_order() -> anyhow::Result<()> {
         .limit_order(
             osmo_asset.clone(),
             Decimal::one(),
-            Uint128::one(),
             atom_asset.clone(),
             "sell",
             &atom_coins,
@@ -120,7 +115,6 @@ fn place_limit_order() -> anyhow::Result<()> {
     let _ = app.limit_order(
         osmo_asset.clone(),
         Decimal::one(),
-        Uint128::one(),
         atom_asset.clone(),
         "buy",
         &atom_coins,
@@ -159,7 +153,6 @@ fn place_limit_order() -> anyhow::Result<()> {
     let _ = app.limit_order(
         osmo_asset.clone(),
         Decimal::one(),
-        Uint128::one(),
         atom_asset.clone(),
         "sell",
         &osmo_coins,
@@ -214,7 +207,6 @@ fn place_market_order() -> anyhow::Result<()> {
     app.limit_order(
         osmo_asset.clone(),
         Decimal::from_str("3.0")?,
-        Uint128::one(),
         atom_asset.clone(),
         "sell",
         &atom_coins,
@@ -222,7 +214,6 @@ fn place_market_order() -> anyhow::Result<()> {
     app.limit_order(
         osmo_asset.clone(),
         Decimal::from_str("4.0")?,
-        Uint128::one(),
         atom_asset.clone(),
         "sell",
         &atom_coins,
@@ -230,7 +221,6 @@ fn place_market_order() -> anyhow::Result<()> {
     app.limit_order(
         osmo_asset.clone(),
         Decimal::from_str("2.0")?,
-        Uint128::one(),
         atom_asset.clone(),
         "buy",
         &atom_coins,
@@ -238,7 +228,6 @@ fn place_market_order() -> anyhow::Result<()> {
     app.limit_order(
         osmo_asset.clone(),
         Decimal::from_str("1.0")?,
-        Uint128::one(),
         atom_asset.clone(),
         "buy",
         &atom_coins,
@@ -248,9 +237,9 @@ fn place_market_order() -> anyhow::Result<()> {
     let err: OrderbookError = app
         .market_order(
             osmo_asset.clone(),
-            Uint128::zero(),
             atom_asset.clone(),
             "buy",
+            &coins(0, "atom"),
         )
         .unwrap_err()
         .downcast()
@@ -261,9 +250,9 @@ fn place_market_order() -> anyhow::Result<()> {
     let err: OrderbookError = app
         .market_order(
             osmo_asset.clone(),
-            Uint128::one(),
             atom_asset.clone(),
             "invalid",
+            &atom_coins,
         )
         .unwrap_err()
         .downcast()
@@ -271,12 +260,7 @@ fn place_market_order() -> anyhow::Result<()> {
     assert_eq!(err, OrderbookError::InvalidSide("invalid".to_string()));
 
     // make sure it works
-    let _ = app.market_order(
-        osmo_asset.clone(),
-        Uint128::one(),
-        atom_asset.clone(),
-        "buy",
-    )?;
+    let _ = app.market_order(osmo_asset.clone(), atom_asset.clone(), "buy", &atom_coins)?;
 
     // // make sure balance of sender was updated
     // let balances = app.account().query_balances()?;

@@ -24,15 +24,11 @@ pub fn execute_handler(
             base,
             quote,
             price,
-            quantity,
             side,
-        } => limit::limit_order(deps, env, api, info, base, quote, price, quantity, side),
-        OrderbookExecuteMsg::MarketOrder {
-            base,
-            quote,
-            quantity,
-            side,
-        } => market::market_order(deps, env, api, info, base, quote, quantity, side),
+        } => limit::limit_order(deps, env, api, info, base, quote, price, side),
+        OrderbookExecuteMsg::MarketOrder { base, quote, side } => {
+            market::market_order(deps, env, api, info, base, quote, side)
+        }
     }
 }
 

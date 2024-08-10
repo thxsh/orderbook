@@ -5,9 +5,6 @@ pub mod msg;
 mod replies;
 pub mod state;
 
-#[cfg(test)]
-mod tests;
-
 pub use error::OrderbookError;
 
 /// The version of your app

@@ -21,14 +21,13 @@ pub enum OrderbookExecuteMsg {
         base: String,
         quote: String,
         price: Decimal,
-        quantity: Uint128,
         side: String, // "buy" or "sell"
     },
     // Place a market order
+    #[cw_orch(payable)]
     MarketOrder {
         base: String,
         quote: String,
-        quantity: Uint128,
         side: String, // "buy" or "sell"
     },
     /// Admin method - reset count
