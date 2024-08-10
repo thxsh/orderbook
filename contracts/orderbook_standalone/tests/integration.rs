@@ -1,8 +1,8 @@
 use cw_controllers::AdminError;
 use orderbook_standalone::{
     msg::{
-        ConfigResponse, CountResponse, OrderbookStandaloneExecuteMsgFns, OrderbookStandaloneInstantiateMsg,
-        OrderbookStandaloneQueryMsgFns,
+        ConfigResponse, CountResponse, OrderbookStandaloneExecuteMsgFns,
+        OrderbookStandaloneInstantiateMsg, OrderbookStandaloneQueryMsgFns,
     },
     OrderbookStandaloneError, OrderbookStandaloneInterface, ORDERBOOK_NAMESPACE,
 };
@@ -131,6 +131,9 @@ fn failed_reset() -> anyhow::Result<()> {
         .unwrap_err()
         .downcast()
         .unwrap();
-    assert_eq!(err, OrderbookStandaloneError::Admin(AdminError::NotAdmin {}));
+    assert_eq!(
+        err,
+        OrderbookStandaloneError::Admin(AdminError::NotAdmin {})
+    );
     Ok(())
 }

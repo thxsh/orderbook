@@ -1,7 +1,5 @@
 use crate::{
-    contract::{
-        Orderbook, OrderbookResult
-    },
+    contract::{Orderbook, OrderbookResult},
     msg::OrderbookMigrateMsg,
 };
 

@@ -1,7 +1,7 @@
 use cosmwasm_schema::{remove_schemas, write_api};
 use orderbook_standalone::msg::{
-    OrderbookStandaloneExecuteMsg, OrderbookStandaloneInstantiateMsg, OrderbookStandaloneMigrateMsg,
-    OrderbookStandaloneQueryMsg,
+    OrderbookStandaloneExecuteMsg, OrderbookStandaloneInstantiateMsg,
+    OrderbookStandaloneMigrateMsg, OrderbookStandaloneQueryMsg,
 };
 use std::env::current_dir;
 use std::fs::create_dir_all;

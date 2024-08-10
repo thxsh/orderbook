@@ -1,9 +1,7 @@
 use cw_orch::contract::{interface_traits::InstantiableContract, Contract};
 use cw_orch::prelude::*;
 
-use crate::{
-    msg::*, ORDERBOOK_STANDALONE
-};
+use crate::{msg::*, ORDERBOOK_STANDALONE};
 
 #[cw_orch::interface(
     OrderbookStandaloneInstantiateMsg,
@@ -33,7 +31,9 @@ impl<Chain: cw_orch::environment::CwEnv> abstract_interface::RegisteredModule
     }
 }
 
-impl<Chain: cw_orch::environment::CwEnv> From<Contract<Chain>> for OrderbookStandaloneInterface<Chain> {
+impl<Chain: cw_orch::environment::CwEnv> From<Contract<Chain>>
+    for OrderbookStandaloneInterface<Chain>
+{
     fn from(value: Contract<Chain>) -> Self {
         OrderbookStandaloneInterface(value)
     }

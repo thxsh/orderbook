@@ -20,9 +20,7 @@ fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
     for network in networks {
         // Setup
         let rt = Runtime::new()?;
-        let chain = DaemonBuilder::new(network)
-            .handle(rt.handle())
-            .build()?;
+        let chain = DaemonBuilder::new(network).handle(rt.handle()).build()?;
 
         let app_namespace = Namespace::from_id(ORDERBOOK_ID)?;
 

@@ -3,8 +3,9 @@ use cosmwasm_std::{to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Repl
 
 use crate::{
     msg::{
-        ConfigResponse, CountResponse, OrderbookStandaloneExecuteMsg, OrderbookStandaloneInstantiateMsg,
-        OrderbookStandaloneMigrateMsg, OrderbookStandaloneQueryMsg,
+        ConfigResponse, CountResponse, OrderbookStandaloneExecuteMsg,
+        OrderbookStandaloneInstantiateMsg, OrderbookStandaloneMigrateMsg,
+        OrderbookStandaloneQueryMsg,
     },
     state::{Config, CONFIG, COUNT},
     OrderbookStandalone, OrderbookStandaloneResult, ORDERBOOK_STANDALONE, ORDERBOOK_STANDALONE_ID,
@@ -66,7 +67,11 @@ pub fn execute(
 }
 
 /// Update the configuration of the standalone
-fn update_config(deps: DepsMut, info: MessageInfo, module: OrderbookStandalone) -> OrderbookStandaloneResult {
+fn update_config(
+    deps: DepsMut,
+    info: MessageInfo,
+    module: OrderbookStandalone,
+) -> OrderbookStandaloneResult {
     ORDERBOOK_STANDALONE
         .admin
         .assert_admin(deps.as_ref(), &info.sender)?;
@@ -76,7 +81,9 @@ fn update_config(deps: DepsMut, info: MessageInfo, module: OrderbookStandalone) 
 }
 
 fn increment(deps: DepsMut, module: OrderbookStandalone) -> OrderbookStandaloneResult {
-    COUNT.update(deps.storage, |count| OrderbookStandaloneResult::Ok(count + 1))?;
+    COUNT.update(deps.storage, |count| {
+        OrderbookStandaloneResult::Ok(count + 1)
+    })?;
 
     Ok(module.response("increment"))
 }
@@ -124,7 +131,11 @@ pub fn reply(_deps: DepsMut, _env: Env, msg: Reply) -> OrderbookStandaloneResult
 
 /// Handle the standalone migrate msg
 #[cfg_attr(feature = "export", cosmwasm_std::entry_point)]
-pub fn migrate(deps: DepsMut, _env: Env, _msg: OrderbookStandaloneMigrateMsg) -> OrderbookStandaloneResult {
+pub fn migrate(
+    deps: DepsMut,
+    _env: Env,
+    _msg: OrderbookStandaloneMigrateMsg,
+) -> OrderbookStandaloneResult {
     // The Abstract Standalone object does version checking and
     ORDERBOOK_STANDALONE.migrate(deps)?;
     Ok(ORDERBOOK_STANDALONE.response("migrate"))

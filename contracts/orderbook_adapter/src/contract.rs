@@ -1,9 +1,7 @@
 use crate::{
     error::OrderbookAdapterError,
     handlers,
-    msg::{
-        OrderbookAdapterExecuteMsg, OrderbookAdapterInstantiateMsg, OrderbookAdapterQueryMsg
-    },
+    msg::{OrderbookAdapterExecuteMsg, OrderbookAdapterInstantiateMsg, OrderbookAdapterQueryMsg},
     ADAPTER_VERSION, ORDERBOOK_ADAPTER_ID,
 };
 
@@ -20,10 +18,11 @@ pub type OrderbookAdapter = AdapterContract<
 /// The type of the result returned by your Adapter's entry points.
 pub type AdapterResult<T = Response> = Result<T, OrderbookAdapterError>;
 
-const ORDERBOOK_ADAPTER: OrderbookAdapter = OrderbookAdapter::new(ORDERBOOK_ADAPTER_ID, ADAPTER_VERSION, None)
-    .with_instantiate(handlers::instantiate_handler)
-    .with_execute(handlers::execute_handler)
-    .with_query(handlers::query_handler);
+const ORDERBOOK_ADAPTER: OrderbookAdapter =
+    OrderbookAdapter::new(ORDERBOOK_ADAPTER_ID, ADAPTER_VERSION, None)
+        .with_instantiate(handlers::instantiate_handler)
+        .with_execute(handlers::execute_handler)
+        .with_query(handlers::query_handler);
 
 // Export handlers
 #[cfg(feature = "export")]

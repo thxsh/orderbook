@@ -1,6 +1,8 @@
 use orderbook_adapter::{
     contract::interface::OrderbookAdapterInterface,
-    msg::{ConfigResponse, ExecuteMsg, OrderbookAdapterInstantiateMsg, OrderbookAdapterQueryMsgFns},
+    msg::{
+        ConfigResponse, ExecuteMsg, OrderbookAdapterInstantiateMsg, OrderbookAdapterQueryMsgFns,
+    },
     OrderbookAdapterExecuteMsg, ORDERBOOK_ADAPTER_ID, ORDERBOOK_NAMESPACE,
 };
 

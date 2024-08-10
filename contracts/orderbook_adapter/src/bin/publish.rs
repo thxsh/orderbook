@@ -8,7 +8,8 @@
 //! $ just publish orderbook-adapter uni-6 osmo-test-5
 //! ```
 use orderbook_adapter::{
-    contract::interface::OrderbookAdapterInterface, msg::OrderbookAdapterInstantiateMsg, ORDERBOOK_ADAPTER_ID,
+    contract::interface::OrderbookAdapterInterface, msg::OrderbookAdapterInstantiateMsg,
+    ORDERBOOK_ADAPTER_ID,
 };
 
 use abstract_adapter::objects::namespace::Namespace;
@@ -21,9 +22,7 @@ fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
     for network in networks {
         // Setup
         let rt = Runtime::new()?;
-        let chain = DaemonBuilder::new(network)
-            .handle(rt.handle())
-            .build()?;
+        let chain = DaemonBuilder::new(network).handle(rt.handle()).build()?;
 
         let adapter_namespace = Namespace::from_id(ORDERBOOK_ADAPTER_ID)?;
 
@@ -40,9 +39,10 @@ fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
         }
 
         // Publish the Adapter to the Abstract Platform
-        publisher.publish_adapter::<OrderbookAdapterInstantiateMsg, OrderbookAdapterInterface<Daemon>>(
-            OrderbookAdapterInstantiateMsg {},
-        )?;
+        publisher
+            .publish_adapter::<OrderbookAdapterInstantiateMsg, OrderbookAdapterInterface<Daemon>>(
+                OrderbookAdapterInstantiateMsg {},
+            )?;
     }
     Ok(())
 }

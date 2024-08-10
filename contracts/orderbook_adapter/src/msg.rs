@@ -4,7 +4,11 @@ use abstract_adapter::objects::AccountId;
 use cosmwasm_schema::QueryResponses;
 
 // This is used for type safety and re-exporting the contract endpoint structs.
-abstract_adapter::adapter_msg_types!(OrderbookAdapter, OrderbookAdapterExecuteMsg, OrderbookAdapterQueryMsg);
+abstract_adapter::adapter_msg_types!(
+    OrderbookAdapter,
+    OrderbookAdapterExecuteMsg,
+    OrderbookAdapterQueryMsg
+);
 
 /// Adapter instantiate message
 #[cosmwasm_schema::cw_serde]

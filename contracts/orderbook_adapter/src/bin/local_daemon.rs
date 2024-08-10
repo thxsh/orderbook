@@ -7,7 +7,10 @@
 //! # Run
 //!
 //! `RUST_LOG=info cargo run --bin local_daemon --features="daemon-bin" --package orderbook-adapter`
-use orderbook_adapter::{contract::interface::OrderbookAdapterInterface, OrderbookAdapterExecuteMsg, ORDERBOOK_ADAPTER_ID};
+use orderbook_adapter::{
+    contract::interface::OrderbookAdapterInterface, OrderbookAdapterExecuteMsg,
+    ORDERBOOK_ADAPTER_ID,
+};
 
 use abstract_adapter::{objects::namespace::Namespace, std::adapter::AdapterRequestMsg};
 use abstract_client::{AbstractClient, Publisher};
@@ -49,9 +52,10 @@ fn main() -> anyhow::Result<()> {
     );
 
     // Publish the Adapter to the Abstract Platform
-    publisher.publish_adapter::<OrderbookAdapterInstantiateMsg, OrderbookAdapterInterface<Daemon>>(
-        OrderbookAdapterInstantiateMsg {},
-    )?;
+    publisher
+        .publish_adapter::<OrderbookAdapterInstantiateMsg, OrderbookAdapterInterface<Daemon>>(
+            OrderbookAdapterInstantiateMsg {},
+        )?;
 
     // Install the Adapter on a new account
 

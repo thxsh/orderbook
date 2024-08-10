@@ -66,7 +66,7 @@ fn main() -> anyhow::Result<()> {
 
     // Import standalone's endpoint function traits for easy interactions.
     use orderbook_standalone::msg::{
-        OrderbookStandaloneExecuteMsgFns, OrderbookStandaloneQueryMsgFns
+        OrderbookStandaloneExecuteMsgFns, OrderbookStandaloneQueryMsgFns,
     };
 
     assert_eq!(standalone.count()?.count, 0);

@@ -1,7 +1,5 @@
 use crate::{
-    contract::{
-        AdapterResult, OrderbookAdapter
-    },
+    contract::{AdapterResult, OrderbookAdapter},
     msg::{ConfigResponse, OrderbookAdapterQueryMsg, StatusResponse},
     state::{CONFIG, STATUS},
 };

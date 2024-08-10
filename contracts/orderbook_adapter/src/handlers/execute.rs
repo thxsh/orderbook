@@ -1,7 +1,5 @@
 use crate::{
-    contract::{
-        AdapterResult, OrderbookAdapter
-    },
+    contract::{AdapterResult, OrderbookAdapter},
     msg::OrderbookAdapterExecuteMsg,
     state::{CONFIG, STATUS},
     OrderbookAdapterError, ORDERBOOK_NAMESPACE,

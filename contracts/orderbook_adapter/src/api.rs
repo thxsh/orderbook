@@ -1,7 +1,5 @@
 use crate::{
-    msg::{
-        OrderbookAdapterExecuteMsg, OrderbookAdapterQueryMsg
-    },
+    msg::{OrderbookAdapterExecuteMsg, OrderbookAdapterQueryMsg},
     ORDERBOOK_ADAPTER_ID,
 };
 
@@ -62,7 +60,10 @@ impl<'a, T: OrderbookAdapterApi> OrderbookAdapter<'a, T> {
 /// Queries
 impl<'a, T: OrderbookAdapterApi> OrderbookAdapter<'a, T> {
     /// Query your adapter via message type
-    pub fn query<R: DeserializeOwned>(&self, query_msg: OrderbookAdapterQueryMsg) -> AbstractSdkResult<R> {
+    pub fn query<R: DeserializeOwned>(
+        &self,
+        query_msg: OrderbookAdapterQueryMsg,
+    ) -> AbstractSdkResult<R> {
         let adapters = self.base.adapters(self.deps);
         adapters.query(self.module_id(), query_msg)
     }

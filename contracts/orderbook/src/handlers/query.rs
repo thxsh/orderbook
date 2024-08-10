@@ -30,7 +30,6 @@ fn query_config(deps: Deps) -> StdResult<ConfigResponse> {
 fn query_bids(deps: Deps) -> StdResult<BidsResponse> {
     let bids = BIDS
         .range(deps.storage, None, None, Order::Ascending)
-        .map(|item| item.map(|(k, d)| (AssetEntry::from(k), d)))
         .collect::<StdResult<Vec<_>>>()?;
 
     Ok(BidsResponse { bids })
@@ -39,7 +38,6 @@ fn query_bids(deps: Deps) -> StdResult<BidsResponse> {
 fn query_asks(deps: Deps) -> StdResult<AsksResponse> {
     let asks = ASKS
         .range(deps.storage, None, None, Order::Ascending)
-        .map(|item| item.map(|(k, d)| (AssetEntry::from(k), d)))
         .collect::<StdResult<Vec<_>>>()?;
 
     Ok(AsksResponse { asks })
