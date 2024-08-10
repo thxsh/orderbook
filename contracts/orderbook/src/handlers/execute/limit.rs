@@ -61,7 +61,6 @@ pub fn limit_order(
     }
 
     let bank = api.bank(deps.as_ref());
-    let mut deposit_msg = vec![];
 
     let ans = api.name_service(deps.as_ref());
     let _base_asset = ans.query(&AssetEntry::new(&base))?;
