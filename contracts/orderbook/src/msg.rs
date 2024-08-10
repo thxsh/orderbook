@@ -1,9 +1,7 @@
 use crate::{contract::Orderbook, state::BidAsk};
 
-use abstract_app::objects::{ans_host::AnsHost, AssetEntry};
 use cosmwasm_schema::QueryResponses;
-use cosmwasm_std::{Addr, Decimal, Uint128};
-use cw_asset::Asset;
+use cosmwasm_std::{Decimal, Uint128};
 
 // This is used for type safety and re-exporting the contract endpoint structs.
 abstract_app::app_msg_types!(Orderbook, OrderbookExecuteMsg, OrderbookQueryMsg);

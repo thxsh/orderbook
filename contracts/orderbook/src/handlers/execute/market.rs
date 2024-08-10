@@ -1,30 +1,18 @@
 use crate::{
     contract::{Orderbook, OrderbookResult},
-    msg::OrderbookExecuteMsg,
-    state::{BidAsk, ASKS, BIDS, CONFIG},
     OrderbookError,
 };
 
-use abstract_app::{
-    objects::AssetEntry,
-    sdk::{base, AccountVerification, AccountingInterface, Resolve, TransferInterface},
-    traits::{AbstractNameService, AbstractResponse},
-};
-use cosmwasm_std::{
-    coins, to_json_binary, Addr, Decimal, DepsMut, Env, MessageInfo, Response, Uint128, WasmMsg,
-};
-use cw20::Cw20ExecuteMsg;
-use cw_asset::{Asset, AssetBase, AssetInfo};
-use cw_storage_plus::Map;
-use cw_utils::one_coin;
+use abstract_app::traits::AbstractResponse;
+use cosmwasm_std::{DepsMut, Env, MessageInfo, Uint128};
 
 pub fn market_order(
-    deps: DepsMut,
-    env: Env,
+    _deps: DepsMut,
+    _env: Env,
     api: Orderbook,
-    info: MessageInfo,
-    base: String,
-    quote: String,
+    _info: MessageInfo,
+    _base: String,
+    _quote: String,
     quantity: Uint128,
     side: String,
 ) -> OrderbookResult {

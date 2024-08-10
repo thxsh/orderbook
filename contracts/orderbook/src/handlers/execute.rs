@@ -1,22 +1,11 @@
 use crate::{
     contract::{Orderbook, OrderbookResult},
     msg::OrderbookExecuteMsg,
-    state::{BidAsk, ASKS, BIDS, CONFIG},
-    OrderbookError,
+    state::CONFIG,
 };
 
-use abstract_app::{
-    objects::AssetEntry,
-    sdk::{base, AccountVerification, AccountingInterface, Resolve, TransferInterface},
-    traits::{AbstractNameService, AbstractResponse},
-};
-use cosmwasm_std::{
-    coins, to_json_binary, Addr, Decimal, DepsMut, Env, MessageInfo, Response, Uint128, WasmMsg,
-};
-use cw20::Cw20ExecuteMsg;
-use cw_asset::{Asset, AssetBase, AssetInfo};
-use cw_storage_plus::Map;
-use cw_utils::one_coin;
+use abstract_app::traits::AbstractResponse;
+use cosmwasm_std::{DepsMut, Env, MessageInfo};
 
 mod limit;
 mod market;
@@ -50,7 +39,7 @@ pub fn execute_handler(
 /// Update the configuration of the app
 fn update_config(
     deps: DepsMut,
-    env: Env,
+    _env: Env,
     msg_info: MessageInfo,
     api: Orderbook,
 ) -> OrderbookResult {
@@ -61,7 +50,7 @@ fn update_config(
     Ok(api.response("update_config"))
 }
 
-fn reset(deps: DepsMut, env: Env, info: MessageInfo, api: Orderbook) -> OrderbookResult {
+fn reset(deps: DepsMut, _env: Env, info: MessageInfo, api: Orderbook) -> OrderbookResult {
     api.admin.assert_admin(deps.as_ref(), &info.sender)?;
 
     Ok(api.response("reset"))

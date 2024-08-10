@@ -1,22 +1,15 @@
 use crate::{
     contract::{Orderbook, OrderbookResult},
-    msg::OrderbookExecuteMsg,
-    state::{BidAsk, ASKS, BIDS, CONFIG},
+    state::{BidAsk, ASKS, BIDS},
     OrderbookError,
 };
 
 use abstract_app::{
     objects::AssetEntry,
-    sdk::{base, AccountVerification, AccountingInterface, Resolve, TransferInterface},
+    sdk::TransferInterface,
     traits::{AbstractNameService, AbstractResponse},
 };
-use cosmwasm_std::{
-    coins, to_json_binary, Addr, Decimal, DepsMut, Env, MessageInfo, Response, Uint128, WasmMsg,
-};
-use cw20::Cw20ExecuteMsg;
-use cw_asset::{Asset, AssetBase, AssetInfo};
-use cw_storage_plus::Map;
-use cw_utils::one_coin;
+use cosmwasm_std::{Decimal, DepsMut, Env, MessageInfo, Uint128};
 
 fn verify_deposit(info: MessageInfo, denom: &str, qty: Uint128) -> OrderbookResult<()> {
     if let Some(funds) = info.funds.iter().find(|coin| &coin.denom == denom) {
@@ -35,7 +28,7 @@ fn verify_deposit(info: MessageInfo, denom: &str, qty: Uint128) -> OrderbookResu
 
 pub fn limit_order(
     deps: DepsMut,
-    env: Env,
+    _env: Env,
     api: Orderbook,
     info: MessageInfo,
     base: String,
@@ -70,8 +63,8 @@ pub fn limit_order(
     let mut deposit_msg = vec![];
 
     let ans = api.name_service(deps.as_ref());
-    let base_asset = ans.query(&AssetEntry::new(&base))?;
-    let quote_asset = ans.query(&AssetEntry::new(&quote))?;
+    let _base_asset = ans.query(&AssetEntry::new(&base))?;
+    let _quote_asset = ans.query(&AssetEntry::new(&quote))?;
     // println!("base_asset: {:?}", base_asset);
     // println!("quote_asset: {:?}", quote_asset);
 

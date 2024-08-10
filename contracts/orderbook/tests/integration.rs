@@ -1,7 +1,7 @@
-use std::{borrow::Borrow, str::FromStr};
+use std::str::FromStr;
 
-use abstract_interface::{Abstract, ExecuteMsgFns};
-use cw20::{msg::Cw20ExecuteMsgFns, Cw20ExecuteMsg, Cw20QueryMsg, MinterResponse};
+use abstract_interface::ExecuteMsgFns;
+
 use cw_asset::AssetInfoBase;
 use orderbook::{
     contract::interface::OrderbookInterface,
@@ -13,12 +13,7 @@ use orderbook::{
     OrderbookError, ORDERBOOK_NAMESPACE,
 };
 
-use abstract_app::{
-    abstract_testing::MockAnsHost,
-    mock::mock_dependencies,
-    objects::{namespace::Namespace, AssetEntry, UncheckedContractEntry},
-    std::ans_host::ContractFilter,
-};
+use abstract_app::objects::namespace::Namespace;
 use abstract_client::{
     builder::cw20_builder::Cw20QueryMsgFns, AbstractClient, Application, Environment,
 };
@@ -26,7 +21,6 @@ use cosmwasm_std::{coins, Decimal, Uint128};
 use cw_controllers::AdminError;
 // Use prelude to get all the necessary imports
 use cw_orch::{anyhow, prelude::*};
-use cw_plus_interface::cw20_base::{self, Cw20Base};
 
 struct TestEnv<Env: CwEnv> {
     abs: AbstractClient<Env>,
@@ -203,8 +197,8 @@ fn place_limit_order() -> anyhow::Result<()> {
 
     let osmo_asset = "uosmo".to_string();
     let atom_asset = "atom".to_string();
-    let ntrn_asset = "ntrn".to_string();
-    let juno_asset = "juno".to_string();
+    let _ntrn_asset = "ntrn".to_string();
+    let _juno_asset = "juno".to_string();
 
     let atom_coins = coins(1, "atom");
     let osmo_coins = coins(1, "uosmo");
@@ -303,7 +297,7 @@ fn place_limit_order() -> anyhow::Result<()> {
     let icaa_address = app.account().proxy()?;
     assert_eq!(
         &abs.environment()
-            .balance(&icaa_address, Some("atom".into()))?,
+            .balance(icaa_address, Some("atom".into()))?,
         &atom_coins,
     );
 
@@ -341,7 +335,7 @@ fn place_limit_order() -> anyhow::Result<()> {
     let icaa_address = app.account().proxy()?;
     assert_eq!(
         &abs.environment()
-            .balance(&icaa_address, Some("uosmo".into()))?,
+            .balance(icaa_address, Some("uosmo".into()))?,
         &coins(1, "uosmo"),
     );
 
@@ -368,13 +362,13 @@ fn place_limit_order() -> anyhow::Result<()> {
 #[ignore]
 fn place_market_order() -> anyhow::Result<()> {
     let env = TestEnv::setup()?;
-    let mut app = env.app;
-    let sender = env.abs.environment().sender_addr();
+    let app = env.app;
+    let _sender = env.abs.environment().sender_addr();
 
     let osmo_asset = "uosmo".to_string();
     let atom_asset = "atom".to_string();
-    let ntrn_asset = "ntrn".to_string();
-    let juno_asset = "juno".to_string();
+    let _ntrn_asset = "ntrn".to_string();
+    let _juno_asset = "juno".to_string();
 
     let atom_coins = coins(1, "atom");
 

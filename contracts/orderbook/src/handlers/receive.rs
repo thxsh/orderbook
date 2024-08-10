@@ -7,7 +7,7 @@ use crate::contract::{Orderbook, OrderbookResult};
 
 pub fn receive_handler(
     deps: DepsMut,
-    env: Env,
+    _env: Env,
     mut info: MessageInfo,
     module: Orderbook,
     msg: Cw20ReceiveMsg,

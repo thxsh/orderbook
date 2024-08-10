@@ -4,9 +4,7 @@ use crate::{
     state::{ASKS, BIDS, CONFIG},
 };
 
-use abstract_app::objects::AssetEntry;
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env, Order, StdResult};
-use cw_storage_plus::Bound;
 
 pub fn query_handler(
     deps: Deps,
