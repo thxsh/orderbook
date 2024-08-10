@@ -33,12 +33,6 @@ cw-plus-interface = { workspace = true }
 
 # Dependencies for bins
 clap = { workspace = true, optional = true, features = ["derive"] }
-abstract-client = { workspace = true, optional = true }
-dotenv = { workspace = true, optional = true }
-env_logger = { workspace = true, optional = true }
-cw-utils = "1.0.3"
-
-[dev-dependencies]
-orderbook = { workspace = true }
 abstract-client = { workspace = true }
-abstract-app = { workspace = true, features = ["test-utils"] }
+cw-utils = "1.0.3"
+orderbook = { workspace = true }

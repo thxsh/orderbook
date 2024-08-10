@@ -1,5 +1,5 @@
 [workspace]
-members = ["contracts/*"]
+members = ["contracts/*", "tests"]
 resolver = "2"
 
 [profile.release]
@@ -40,8 +40,6 @@ dotenv = "0.15.0"
 env_logger = "0.11.3"
 clap = { version = "4.3.7" }
 
+# LOCAL
 orderbook = { path = "contracts/orderbook" }
-orderbook-adapter = { path = "contracts/orderbook_adapter" }
-orderbook-standalone = { path = "contracts/orderbook_standalone" }
 orderbook-tests = { path = "tests" }
-

@@ -1,9 +1,0 @@
-{
-  "name": "OrderbookStandalone",
-  "description": "Standalone description.",
-  "website": "",
-  "docs": "",
-  "type": "standalone",
-  "icon": "GiTrade",
-  "enabled": true
-}
