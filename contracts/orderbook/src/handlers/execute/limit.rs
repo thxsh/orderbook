@@ -73,12 +73,11 @@ pub fn limit_order(
 
     // for buy orders, place the order in the bids using quote_asset
     // for sell orders, place the order in the asks using base_asset
-    if &side == "buy" {
+    let deposit = if &side == "buy" {
         // make sure quantity matched the quote_asset funds deposited
         verify_deposit(info.clone(), quote.as_str(), quantity)?;
 
         let deposit = bank.deposit(info.funds)?;
-        deposit_msg = deposit;
 
         let bid = BidAsk {
             account: sender.clone(),
@@ -97,12 +96,13 @@ pub fn limit_order(
             bids.push(bid);
             BIDS.save(deps.storage, market.clone(), &bids)?;
         }
+
+        deposit
     } else {
         // make sure quantity matched the base_asset funds deposited
         verify_deposit(info.clone(), base.as_str(), quantity)?;
 
         let deposit = bank.deposit(info.funds)?;
-        deposit_msg = deposit;
 
         let ask = BidAsk {
             account: sender.clone(),
@@ -121,7 +121,9 @@ pub fn limit_order(
             asks.push(ask);
             ASKS.save(deps.storage, market.clone(), &asks)?;
         }
-    }
 
-    Ok(api.response("limit_order").add_messages(deposit_msg))
+        deposit
+    };
+
+    Ok(api.response("limit_order").add_messages(deposit))
 }

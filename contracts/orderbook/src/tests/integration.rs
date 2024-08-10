@@ -1,21 +1,10 @@
-use std::str::FromStr;
-
-use abstract_interface::ExecuteMsgFns;
-
-use cw_asset::AssetInfoBase;
 use orderbook::{
-    contract::interface::OrderbookInterface,
-    msg::{
-        AsksResponse, BidsResponse, ConfigResponse, OrderbookExecuteMsgFns,
-        OrderbookInstantiateMsg, OrderbookQueryMsgFns,
-    },
-    state::BidAsk,
-    OrderbookError, ORDERBOOK_NAMESPACE,
+    msg::{BidsResponse, ConfigResponse, OrderbookExecuteMsgFns, OrderbookQueryMsgFns},
+    OrderbookError,
 };
 
-use abstract_app::objects::namespace::Namespace;
-use abstract_client::{AbstractClient, Application, Environment};
-use cosmwasm_std::{coins, Decimal, Uint128};
+use abstract_client::Environment;
+use cosmwasm_std::coins;
 use cw_controllers::AdminError;
 // Use prelude to get all the necessary imports
 use cw_orch::{anyhow, prelude::*};
