@@ -10,7 +10,7 @@ pub use error::OrderbookError;
 /// The version of your app
 pub const APP_VERSION: &str = env!("CARGO_PKG_VERSION");
 
-pub use contract::interface::OrderbookInterface;
+pub use contract::{interface::OrderbookInterface, Orderbook};
 
 pub const ORDERBOOK_NAMESPACE: &str = "thxsh";
 pub const ORDERBOOK_NAME: &str = "orderbook";

@@ -67,7 +67,6 @@ fn place_limit_order() -> anyhow::Result<()> {
         .unwrap_err()
         .downcast::<OrderbookError>()
         .unwrap_err();
-    // println!("err: {:#?}", );
     assert_eq!(
         err.source().unwrap().to_string(),
         "Cannot transfer empty coins amount".to_string()

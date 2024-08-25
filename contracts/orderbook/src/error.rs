@@ -40,4 +40,7 @@ pub enum OrderbookError {
 
     #[error("Asset deposited does not match the market side")]
     IncorrectAsset,
+
+    #[error("The IBC message is not authorized")]
+    UnauthorizedIbcMessage,
 }
