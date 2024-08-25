@@ -34,5 +34,5 @@ cw-plus-interface = { workspace = true }
 # Dependencies for bins
 clap = { workspace = true, optional = true, features = ["derive"] }
 abstract-client = { workspace = true }
-cw-utils = "1.0.3"
+cw-utils = "2.0.0"
 orderbook = { workspace = true }
